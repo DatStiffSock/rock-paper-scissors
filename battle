@@ -1,0 +1,36 @@
+class Item:
+    def __init__(self, name, emoji, count):
+        self.name = name
+        self.emoji = emoji
+        self.count = count
+    def attack(self, other):
+        if self.name == other.name:
+            return "It's a tie!"
+        elif (self.name == "Rock" and other.name == "Scissors") or \
+             (self.name == "Paper" and other.name == "Rock") or \
+             (self.name == "Scissors" and other.name == "Paper"):
+            other.count -= 1
+            return f"{self.name} {self.emoji} defeats {other.name} {other.emoji}!"
+        else:
+            self.count -= 1
+            return f"{other.name} {other.emoji} defeats {self.name} {self.emoji}!"
+def initialize_items():
+    rock = Item("Rock", "🪨", 20)
+    paper = Item("Paper", "📄", 20)
+    scissors = Item("Scissors", "✂️", 20)
+    return rock, paper, scissors
+def display_status(items):
+    for item in items:
+        print(f"{item.name} {item.emoji}: {item.count}")
+def main():
+    items = initialize_items()
+    while any(item.count > 0 for item in items):
+        display_status(items)
+        choice1 = random.choice(items)
+        choice2 = random.choice(items)
+        result = choice1.attack(choice2)
+        print(result)
+    print("Game Over!")
+    display_status(items)
+if __name__ == "__main__":
+    main()
